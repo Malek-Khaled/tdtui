@@ -31,30 +31,19 @@ class Add_task(urwid.Frame):
         self.list_walker = list_walker
         self.input = urwid.Edit(multiline=False)
         self.task_name = task_definition(self)
-        self.set_color = Add_color(self.task_name, self, self.list_walker)
+        self.set_color = Select_color(self.task_name, self, self.list_walker)
         super().__init__(*args, body=self.task_name)
 
 
-class Add_color(urwid.LineBox):
+class Select_color(urwid.LineBox):
     def __init__(self, name, main_widget,list_walker,*args):
         self.list_walker = list_walker
         self.task_name = name
         self.main_widget = main_widget
-        self.colors_list = urwid.SimpleListWalker([self.icon_color("yellow"),self.icon_color("magenta"),
-                                                   self.icon_color("cyan"), self.icon_color("dark_cyan"),
-                                                   self.icon_color("green"), self.icon_color("brown"),
-                                                   self.icon_color("red"), self.icon_color("blue")])
-        self.colors_list_box = urwid.ListBox(self.colors_list)
-        self.color_dict = {
-            0: "task_yellow",
-            1: "task_magenta",
-            2: "task_cyan",
-            3: "task_dark_cyan",
-            4: "task_green",
-            5: "task_brown",
-            6: "task_red",
-            7: "task_blue"
-        }
+        self.colors = ["yellow", "magenta", "cyan", "dark_cyan", "green", "brown", "red", "blue"]
+        self.colors_attrmap = urwid.SimpleListWalker([self.icon_color(color) for color in self.colors])
+        self.colors_list_box = urwid.ListBox(self.colors_attrmap)
+        self.color_dict = {i:f"task_{self.colors[i]}" for i in range(len(self.colors))}
         super().__init__(*args, original_widget=self.colors_list_box, title="Select a color", title_align="left")
 
     def keypress(self, size, key):
@@ -72,7 +61,7 @@ class Add_color(urwid.LineBox):
             return super().keypress(size,key)
 
     def focus_next(self):
-        if self.colors_list_box.focus_position < len(self.colors_list) - 1:
+        if self.colors_list_box.focus_position < len(self.colors_attrmap) - 1:
             self.colors_list_box.focus_position += 1
 
     def focus_previous(self):
@@ -131,9 +120,9 @@ def main_keypress(key):
 palette = [
     ("task_yellow", "yellow", ""),
     ("task_yellow_focus", "black", "yellow"),
-    ('task_blue', 'light blue', ""),
-    ('task_blue_focus', 'black', "light blue"),
-    ('task_cyan', 'light cyan', ""),
+    ("task_blue", "light blue", ""),
+    ("task_blue_focus", "black", "light blue"),
+    ("task_cyan", "light cyan", ""),
     ("task_cyan_focus", "black", "light cyan"),
     ("task_dark_cyan", "dark cyan", ""),
     ("task_dark_cyan_focus", "black", "dark cyan"),
@@ -144,7 +133,7 @@ palette = [
     ("task_red", "light red", ""),
     ("task_red_focus", "black", "light red"),
     ("task_magenta", "light magenta", ""),
-    ('task_magenta_focus', 'black', 'light magenta'),
+    ("task_magenta_focus", "black", "light magenta"),
 ]
 
 tasks_list = Tasks_list()
