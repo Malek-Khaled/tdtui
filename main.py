@@ -40,12 +40,20 @@ class Add_color(urwid.LineBox):
         self.list_walker = list_walker
         self.task_name = name
         self.main_widget = main_widget
-        self.colors_list = urwid.SimpleListWalker([self.icon_color("yellow"),self.icon_color("magenta"), self.icon_color("cyan")])
+        self.colors_list = urwid.SimpleListWalker([self.icon_color("yellow"),self.icon_color("magenta"),
+                                                   self.icon_color("cyan"), self.icon_color("dark_cyan"),
+                                                   self.icon_color("green"), self.icon_color("brown"),
+                                                   self.icon_color("red"), self.icon_color("blue")])
         self.colors_list_box = urwid.ListBox(self.colors_list)
         self.color_dict = {
             0: "task_yellow",
             1: "task_magenta",
-            2: "task_cyan"
+            2: "task_cyan",
+            3: "task_dark_cyan",
+            4: "task_green",
+            5: "task_brown",
+            6: "task_red",
+            7: "task_blue"
         }
         super().__init__(*args, original_widget=self.colors_list_box, title="Select a color", title_align="left")
 
@@ -123,9 +131,18 @@ def main_keypress(key):
 palette = [
     ("task_yellow", "yellow", ""),
     ("task_yellow_focus", "black", "yellow"),
-    ('task_blue', 'dark blue', ""),
-    ('task_cyan', 'dark cyan', ""),
-    ("task_cyan_focus", "black", "dark cyan"),
+    ('task_blue', 'light blue', ""),
+    ('task_blue_focus', 'black', "light blue"),
+    ('task_cyan', 'light cyan', ""),
+    ("task_cyan_focus", "black", "light cyan"),
+    ("task_dark_cyan", "dark cyan", ""),
+    ("task_dark_cyan_focus", "black", "dark cyan"),
+    ("task_green", "light green", ""),
+    ("task_green_focus", "black", "light green"),
+    ("task_brown", "brown", ""),
+    ("task_brown_focus", "black", "brown"),
+    ("task_red", "light red", ""),
+    ("task_red_focus", "black", "light red"),
     ("task_magenta", "light magenta", ""),
     ('task_magenta_focus', 'black', 'light magenta'),
 ]
