@@ -176,8 +176,12 @@ class Tasks_list(urwid.Pile):
 def main_keypress(key):
     if key == "tab":
         if main_layout.get_focus() == input:
-            main_layout.set_focus(tasks_list)
-            tasks_list.set_focus(tasks_list.incompleted_tasks)
+            if len(tasks_list.incompleted_tasks.list_walker) != 0:
+                main_layout.set_focus(tasks_list)
+                tasks_list.set_focus(tasks_list.incompleted_tasks)
+            elif len(tasks_list.completed_tasks.list_walker) != 0:
+                main_layout.set_focus(tasks_list)
+                tasks_list.set_focus(tasks_list.completed_tasks)
 
 def padding(widget, left=5, right=5):
     return urwid.Padding(widget, left=left, right=right)
