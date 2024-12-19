@@ -123,9 +123,9 @@ class Tasks_list(urwid.Pile):
             if key in ("d", "D"):
                 self.get_listwalker().pop(self.get_focus().list_box.focus_position)
                 self.auto_focus()
-            elif key in ("j", "J","down"):
-                self.focus_previous()
             elif key in ("k", "K","up"):
+                self.focus_previous()
+            elif key in ("j", "J","down"):
                 self.focus_next()
             elif key in ("e","E"):
                 if self.get_focus() == self.incompleted_tasks and len(self.completed_tasks.list_walker) != 0:
