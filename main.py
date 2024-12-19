@@ -67,9 +67,9 @@ class Select_color(urwid.LineBox):
             self.list_walker.append(task.task_color_map)
             self.main_widget.set_body(self.task_name)
             self.task_name.input.set_edit_text("")
-        elif key in ("j", "J","down"):
-            self.focus_previous()
         elif key in ("k", "K","up"):
+            self.focus_previous()
+        elif key in ("j", "J","down"):
             self.focus_next()
         else:
             return super().keypress(size,key)
