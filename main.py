@@ -18,6 +18,19 @@ class Task(urwid.SelectableIcon):
     def change_status(self):
         self.is_completed = not self.is_completed
         self.set_text(f"{self.get_status()} {self.task}")
+        self.change_group()
+
+    def change_group(self):
+        if self.is_completed:
+            tasks_list.completed_tasks.list_walker.append(self.task_color_map)
+            tasks_list.incompleted_tasks.list_walker.pop(tasks_list.incompleted_tasks.list_box.focus_position)
+        else:
+
+            tasks_list.incompleted_tasks.list_walker.append(self.task_color_map)
+            tasks_list.completed_tasks.list_walker.pop(tasks_list.completed_tasks.list_box.focus_position)
+        tasks_list.auto_focus()
+
+
 
 
     def keypress(self, size, key):
@@ -85,37 +98,85 @@ class task_definition(urwid.LineBox):
             if len(self.input.get_edit_text()) < 30:
                 return super().keypress(size,key)
 
-class Tasks_list(urwid.ListBox):
+class Incompleted_tasks_list(urwid.LineBox):
+    def __init__(self,*args):
+        self.list_walker = urwid.SimpleListWalker([])
+        self.list_box = urwid.ListBox(self.list_walker)
+        super().__init__(*args, original_widget=self.list_box, title="Tasks")
+
+class Completed_tasks_list(urwid.LineBox):
     def __init__(self, *args):
         self.list_walker = urwid.SimpleListWalker([])
-        super().__init__(*args, body=self.list_walker)
+        self.list_box = urwid.ListBox(self.list_walker)
+        super().__init__(*args, original_widget=self.list_box, title="Completed Tasks")
+
+
+class Tasks_list(urwid.Pile):
+    def __init__(self, *args):
+        self.incompleted_tasks = Incompleted_tasks_list()
+        self.completed_tasks = Completed_tasks_list()
+        super().__init__(*args, widget_list=[self.incompleted_tasks, self.completed_tasks])
 
     def keypress(self, size, key):
-        if key in ("d", "D"):
-            self.list_walker.pop(self.focus_position)
-        elif key in ("j", "J","down"):
-            self.focus_previous()
-        elif key in ("k", "K","up"):
-            self.focus_next()
-        elif key == "tab":
-            main_layout.set_focus(input)
-        elif key == "esc":
-            raise urwid.ExitMainLoop()
-        else:
-            super().keypress(size,key)
+        try:
+            if key in ("d", "D"):
+                self.get_listwalker().pop(self.get_focus().list_box.focus_position)
+                self.auto_focus()
+            elif key in ("j", "J","down"):
+                self.focus_previous()
+            elif key in ("k", "K","up"):
+                self.focus_next()
+            elif key in ("e","E"):
+                if self.get_focus() == self.incompleted_tasks and len(self.completed_tasks.list_walker) != 0:
+                    self.set_focus(self.completed_tasks)
+                elif len(self.incompleted_tasks.list_walker) != 0:
+                    self.set_focus(self.incompleted_tasks)
+            elif key == "tab":
+                    main_layout.set_focus(input)
+            elif key == "esc":
+                raise urwid.ExitMainLoop()
+            else:
+                super().keypress(size,key)
+        except IndexError:
+            pass
 
     def focus_next(self):
-        if self.focus_position < len(self.list_walker) - 1:
-            self.focus_position += 1
+        if self.get_focus().list_box.focus_position < len(self.get_listwalker()) - 1:
+            self.get_focus().list_box.focus_position += 1
 
     def focus_previous(self):
-        if self.focus_position > 0:
-            self.focus_position -= 1
+        if self.get_focus().list_box.focus_position > 0:
+            self.get_focus().list_box.focus_position -= 1
+
+    def get_listwalker(self, unfocused=False):
+        if self.get_focus() == self.incompleted_tasks and not unfocused:
+            return self.incompleted_tasks.list_walker
+        elif self.get_focus() != self.incompleted_tasks and unfocused:
+            return self.incompleted_tasks.list_walker
+        elif self.get_focus() == self.completed_tasks and not unfocused:
+            return self.completed_tasks.list_walker
+        else:
+            return self.completed_tasks.list_walker
+
+    def auto_focus(self):
+        if len(self.get_listwalker()) == 0 and len(self.get_listwalker(unfocused=True)) != 0:
+            self.set_focus(self.get_unfocused())
+            
+
+        elif len(self.get_listwalker()) == 0 and len(self.get_listwalker(unfocused=True)) == 0:
+            main_layout.set_focus(input)
+
+    def get_unfocused(self):
+        if self.get_focus() == self.incompleted_tasks:
+            return self.completed_tasks
+        else:
+            return self.incompleted_tasks
 
 def main_keypress(key):
     if key == "tab":
         if main_layout.get_focus() == input:
             main_layout.set_focus(tasks_box)
+            tasks_list.set_focus(tasks_list.incompleted_tasks)
 
 palette = [
     ("task_yellow", "yellow", ""),
@@ -137,7 +198,7 @@ palette = [
 ]
 
 tasks_list = Tasks_list()
-input = Add_task(list_walker=tasks_list.list_walker)
+input = Add_task(list_walker=tasks_list.incompleted_tasks.list_walker)
 tasks_box = urwid.LineBox(tasks_list,title="Tasks", title_align="left")
 main_layout = urwid.Pile([("weight", 1,tasks_box), ("fixed",3,input)])
 main_layout.set_focus(input)
