@@ -176,8 +176,11 @@ class Tasks_list(urwid.Pile):
 def main_keypress(key):
     if key == "tab":
         if main_layout.get_focus() == input:
-            main_layout.set_focus(tasks_box)
+            main_layout.set_focus(tasks_list)
             tasks_list.set_focus(tasks_list.incompleted_tasks)
+
+def padding(widget, left=5, right=5):
+    return urwid.Padding(widget, left=left, right=right)
 
 palette = [
     ("task_yellow", "yellow", ""),
@@ -202,13 +205,9 @@ palette = [
 
 tasks_list = Tasks_list()
 input = Add_task(list_walker=tasks_list.incompleted_tasks.list_walker)
-tasks_box = urwid.LineBox(tasks_list,title="Tasks", title_align="left")
-main_layout = urwid.Pile([("weight", 1,tasks_box), ("fixed",3,input)])
+main_layout = urwid.Pile([("weight", 2,tasks_list), ("fixed",3,input)])
 main_layout.set_focus(input)
-footer = urwid.Text("")
-frame = urwid.Frame(main_layout, footer=footer)
-padding = urwid.Padding(frame, right=5, left=5)
-loop = urwid.MainLoop(padding, unhandled_input=main_keypress, palette=palette)
+loop = urwid.MainLoop(padding(main_layout), unhandled_input=main_keypress, palette=palette)
 
 loop.run()
 
