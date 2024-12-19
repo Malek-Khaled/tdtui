@@ -8,6 +8,7 @@ class Task(urwid.SelectableIcon):
         self.icons = {"completed": "", "not_completed": ""}
         self.color = color
         self.task_color_map = urwid.AttrMap(self, self.color, f'{self.color}_focus')
+        self.task_completed_color_map = urwid.AttrMap(self, "task_completed", "task_completed_focus")
         super().__init__(*args, text=f"{self.get_status()} {self.task}")
     def get_status(self):
         if self.is_completed:
@@ -22,7 +23,7 @@ class Task(urwid.SelectableIcon):
 
     def change_group(self):
         if self.is_completed:
-            tasks_list.completed_tasks.list_walker.append(self.task_color_map)
+            tasks_list.completed_tasks.list_walker.append(self.task_completed_color_map)
             tasks_list.incompleted_tasks.list_walker.pop(tasks_list.incompleted_tasks.list_box.focus_position)
         else:
 
@@ -195,6 +196,8 @@ palette = [
     ("task_red_focus", "black", "light red"),
     ("task_magenta", "light magenta", ""),
     ("task_magenta_focus", "black", "light magenta"),
+    ("task_completed", "dark gray", ""),
+    ("task_completed_focus", "black", "dark gray")
 ]
 
 tasks_list = Tasks_list()
