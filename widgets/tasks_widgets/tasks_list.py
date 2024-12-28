@@ -8,6 +8,7 @@ class Tasks_list(urwid.Pile):
         self.main_frame = main_frame
         self.incompleted_tasks = Incompleted_tasks_list()
         self.completed_tasks = Completed_tasks_list()
+        self.existing_tasks = []
         super().__init__(
             *args, widget_list=[self.incompleted_tasks, self.completed_tasks]
         )
@@ -15,6 +16,11 @@ class Tasks_list(urwid.Pile):
     def keypress(self, size, key):
         try:
             if key in ("d", "D"):
+                self.existing_tasks.remove(
+                    self.get_listwalker()[
+                        self.get_focus().list_box.focus_position
+                    ].base_widget.task
+                )
                 self.get_listwalker().pop(self.get_focus().list_box.focus_position)
                 self.auto_focus()
             elif key in ("k", "K", "up"):
@@ -33,6 +39,7 @@ class Tasks_list(urwid.Pile):
                 raise urwid.ExitMainLoop()
             else:
                 super().keypress(size, key)
+
         except IndexError:
             pass
 

@@ -1,6 +1,7 @@
 import urwid
 from widgets.input_widgets.add_task import Add_task
 from widgets.tasks_widgets.tasks_list import Tasks_list
+from widgets.pop_ups.existing_task_error import Existing_task_error
 
 
 class Main_frame(urwid.Frame):
@@ -10,12 +11,14 @@ class Main_frame(urwid.Frame):
         self.main_layout = urwid.Pile(
             [("weight", 2, self.tasks_list), ("fixed", 3, self.task_def)]
         )
+        self.existing_task_error = Existing_task_error(self)
         super().__init__(self.main_layout, *args)
         self.main_layout.set_focus(self.task_def)
 
     def keypress(self, size, key):
         if key in ("q", "Q"):
-            self.set_body(self.tasks_list)
+            # that to exit the pop-up menu
+            self.set_body(self.main_layout)
         elif key == "tab":
             if self.main_layout.get_focus() == self.task_def:
                 if len(self.tasks_list.incompleted_tasks.list_walker) != 0:
