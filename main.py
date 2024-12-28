@@ -11,12 +11,15 @@ class Main_frame(urwid.Frame):
         self.main_layout = urwid.Pile(
             [("weight", 2, self.tasks_list), ("fixed", 3, self.task_def)]
         )
+        self.color_select_layout = urwid.Pile(
+            [("weight", 2, self.tasks_list), ("fixed", 6, self.task_def)]
+        )
         self.existing_task_error = Existing_task_error(self)
         super().__init__(self.main_layout, *args)
         self.main_layout.set_focus(self.task_def)
 
     def keypress(self, size, key):
-        if key in ("q", "Q"):
+        if key in ("q", "Q") and self.body != self.color_select_layout:
             # that to exit the pop-up menu
             self.set_body(self.main_layout)
         elif key == "tab":

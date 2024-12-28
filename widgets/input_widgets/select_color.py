@@ -37,10 +37,9 @@ class Select_color(urwid.LineBox):
                 self.color_dict[self.colors_list_box.focus_position],
                 self.main_frame,
             )
+            self.set_add_task_mode()
             self.colors_list_box.set_focus(0)
             self.list_walker.append(task.task_color_map)
-            self.main_widget.set_body(self.task_name)
-            self.task_name.input.set_edit_text("")
         elif key in ("k", "K", "up"):
             self.focus_previous()
         elif key in ("j", "J", "down"):
@@ -59,3 +58,9 @@ class Select_color(urwid.LineBox):
     def icon_color(self, color):
         icon_text = urwid.Text("")
         return urwid.AttrMap(icon_text, f"task_{color}", f"task_{color}_focus")
+
+    def set_add_task_mode(self):
+        self.main_widget.set_body(self.task_name)
+        self.task_name.input.set_edit_text("")
+        self.main_frame.set_body(self.main_frame.main_layout)
+        self.main_frame.main_layout.set_focus(self.main_frame.task_def)

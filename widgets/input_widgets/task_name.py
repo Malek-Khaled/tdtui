@@ -19,7 +19,7 @@ class Task_name(urwid.LineBox):
                 self.main_frame.tasks_list.existing_tasks.append(
                     self.input.get_edit_text()
                 )
-                self.main_widget.set_body(self.main_widget.set_color)
+                self.set_color_mode()
             else:
                 self.main_frame.set_body(self.main_frame.existing_task_error)
         elif key == "esc":
@@ -27,3 +27,8 @@ class Task_name(urwid.LineBox):
 
         elif len(self.input.get_edit_text()) < 30:
             super().keypress(size, key)
+
+    def set_color_mode(self):
+        self.main_widget.set_body(self.main_widget.set_color)
+        self.main_frame.set_body(self.main_frame.color_select_layout)
+        self.main_frame.color_select_layout.set_focus(self.main_frame.task_def)
