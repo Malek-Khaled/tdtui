@@ -26,12 +26,15 @@ class Main_frame(urwid.Frame):
             if self.main_layout.get_focus() == self.task_def:
                 if len(self.tasks_list.incompleted_tasks.list_walker) != 0:
                     self.main_layout.set_focus(self.tasks_list)
-                    self.tasks_list.set_focus(self.tasks_list.incompleted_tasks)
+                    self.tasks_list.set_focus(self.tasks_list.incompleted_tasks.linebox)
+                    self.tasks_list.widget_list = self.tasks_list.with_scrollbar
                 elif len(self.tasks_list.completed_tasks.list_walker) != 0:
                     self.main_layout.set_focus(self.tasks_list)
-                    self.tasks_list.set_focus(self.tasks_list.completed_tasks)
+                    self.tasks_list.set_focus(self.tasks_list.completed_tasks.linebox)
+                    self.tasks_list.widget_list = self.tasks_list.with_scrollbar
             else:
                 self.main_layout.set_focus(self.task_def)
+                self.tasks_list.widget_list = self.tasks_list.without_scrollbar
         else:
             return super().keypress(size, key)
 

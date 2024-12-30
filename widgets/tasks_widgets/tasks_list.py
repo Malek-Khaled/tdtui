@@ -9,8 +9,14 @@ class Tasks_list(urwid.Pile):
         self.incompleted_tasks = Incompleted_tasks_list()
         self.completed_tasks = Completed_tasks_list()
         self.existing_tasks = []
+        self.with_scrollbar = [self.incompleted_tasks, self.completed_tasks]
+        self.without_scrollbar = [
+            self.incompleted_tasks.linebox,
+            self.completed_tasks.linebox,
+        ]
         super().__init__(
-            *args, widget_list=[self.incompleted_tasks, self.completed_tasks]
+            self.without_scrollbar,
+            *args,
         )
 
     def keypress(self, size, key):
