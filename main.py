@@ -1,5 +1,5 @@
 import urwid
-from widgets.input_widgets.add_task import Add_task
+from widgets.input_widgets.add_task_field import Add_task_field
 from widgets.tasks_widgets.tasks_list import Tasks_list
 from widgets.pop_ups.existing_task_error import Existing_task_error
 
@@ -7,7 +7,9 @@ from widgets.pop_ups.existing_task_error import Existing_task_error
 class Main_frame(urwid.Frame):
     def __init__(self, *args):
         self.tasks_list = Tasks_list(self)
-        self.task_def = Add_task(self.tasks_list.incompleted_tasks.list_walker, self)
+        self.task_def = Add_task_field(
+            self.tasks_list.incompleted_tasks.list_walker, self
+        )
         self.main_layout = urwid.Pile(
             [("weight", 2, self.tasks_list), ("fixed", 3, self.task_def)]
         )

@@ -3,7 +3,7 @@ from widgets.input_widgets.select_color import Select_color
 from widgets.input_widgets.task_name import Task_name
 
 
-class Add_task(urwid.Frame):
+class Add_task_field(urwid.Frame):
     def __init__(self, list_walker, main_frame, *args):
         self.main_frame = main_frame
         self.list_walker = list_walker
