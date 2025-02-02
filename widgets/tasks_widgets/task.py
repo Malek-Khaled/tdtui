@@ -33,6 +33,7 @@ class Task(urwid.SelectableIcon):
             self.main_frame.tasks_list.incompleted_tasks.list_walker.pop(
                 self.main_frame.tasks_list.incompleted_tasks.list_box.focus_position
             )
+            del self.main_frame.save_state.data["tasks"][self.task]
         else:
             self.main_frame.tasks_list.incompleted_tasks.list_walker.append(
                 self.task_color_map
@@ -40,6 +41,8 @@ class Task(urwid.SelectableIcon):
             self.main_frame.tasks_list.completed_tasks.list_walker.pop(
                 self.main_frame.tasks_list.completed_tasks.list_box.focus_position
             )
+            self.main_frame.save_state.data["tasks"][self.task] = self.color
+        self.main_frame.save_state.save()
         self.main_frame.tasks_list.auto_focus()
 
     def keypress(self, size, key):

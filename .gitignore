@@ -2,3 +2,4 @@ env
 widgets/tasks_widgets/__pycache__
 widgets/input_widgets/__pycache__
 widgets/pop_ups/__pycache__
+saving_system/__pycache__

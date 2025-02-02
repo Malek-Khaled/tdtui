@@ -37,6 +37,10 @@ class Select_color(urwid.LineBox):
                 self.color_dict[self.colors_list_box.focus_position],
                 self.main_frame,
             )
+            self.main_frame.save_state.data["tasks"][
+                self.task_name.input.get_edit_text()
+            ] = self.color_dict[self.colors_list_box.focus_position]
+            self.main_frame.save_state.save()
             self.set_add_task_mode()
             self.colors_list_box.set_focus(0)
             self.list_walker.append(task.task_color_map)

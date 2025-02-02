@@ -7,8 +7,15 @@ class Tasks_list(urwid.Pile):
     def __init__(self, main_frame, *args):
         self.main_frame = main_frame
         self.incompleted_tasks = Incompleted_tasks_list()
+        self.main_frame.save_state.get_saved_tasks(
+            self.incompleted_tasks.list_walker, self.main_frame
+        )
         self.completed_tasks = Completed_tasks_list()
         self.existing_tasks = []
+        self.main_frame.save_state.get_saved_tasks(
+            self.existing_tasks, self.main_frame, names_strs=True
+        )
+
         self.with_scrollbar = [self.incompleted_tasks, self.completed_tasks]
         self.without_scrollbar = [
             self.incompleted_tasks.linebox,
@@ -22,11 +29,12 @@ class Tasks_list(urwid.Pile):
     def keypress(self, size, key):
         try:
             if key in ("d", "D"):
-                self.existing_tasks.remove(
-                    self.get_listwalker()[
-                        self.get_focus().list_box.focus_position
-                    ].base_widget.task
-                )
+                focuesd_task = self.get_listwalker()[
+                    self.get_focus().list_box.focus_position
+                ].base_widget.task
+                self.existing_tasks.remove(focuesd_task)
+                del self.main_frame.save_state.data["tasks"][focuesd_task]
+                self.main_frame.save_state.save()
                 self.get_listwalker().pop(self.get_focus().list_box.focus_position)
                 self.auto_focus()
             elif key in ("k", "K", "up"):

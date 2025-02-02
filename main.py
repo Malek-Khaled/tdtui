@@ -2,10 +2,12 @@ import urwid
 from widgets.input_widgets.add_task_field import Add_task_field
 from widgets.tasks_widgets.tasks_list import Tasks_list
 from widgets.pop_ups.existing_task_error import Existing_task_error
+from saving_system.save_state import Save_state
 
 
 class Main_frame(urwid.Frame):
     def __init__(self, *args):
+        self.save_state = Save_state()
         self.tasks_list = Tasks_list(self)
         self.task_def = Add_task_field(
             self.tasks_list.incompleted_tasks.list_walker, self
