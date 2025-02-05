@@ -33,8 +33,9 @@ class Tasks_list(urwid.Pile):
                     self.get_focus().list_box.focus_position
                 ].base_widget.task
                 self.existing_tasks.remove(focuesd_task)
-                del self.main_frame.save_state.data["tasks"][focuesd_task]
-                self.main_frame.save_state.save()
+                if self.get_focus() != self.completed_tasks:
+                    del self.main_frame.save_state.data["tasks"][focuesd_task]
+                    self.main_frame.save_state.save()
                 self.get_listwalker().pop(self.get_focus().list_box.focus_position)
                 self.auto_focus()
             elif key in ("k", "K", "up"):
