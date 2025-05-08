@@ -1,4 +1,5 @@
 import urwid
+from widgets.pop_ups.task_properties import Task_properties
 
 
 class Task(urwid.SelectableIcon):
@@ -8,7 +9,7 @@ class Task(urwid.SelectableIcon):
         self.task = task
         self.icons = {"completed": "", "not_completed": ""}
         self.color = color
-        self.task_color_map = urwid.AttrMap(self, self.color, f"{self.color}_focus")
+        self.task_color_map = self.set_color(self.color)
         self.task_completed_color_map = urwid.AttrMap(
             self, "task_completed", "task_completed_focus"
         )
@@ -45,7 +46,31 @@ class Task(urwid.SelectableIcon):
         self.main_frame.save_state.save()
         self.main_frame.tasks_list.auto_focus()
 
+    def set_color(self, color):
+        return urwid.AttrMap(self, color, f"{color}_focus")
+
+    def change_color(self, color):
+        self.task_color_map = self.set_color(color)
+        self.color = color
+        self.main_frame.tasks_list.incompleted_tasks.list_walker.insert(
+            self.main_frame.tasks_list.incompleted_tasks.list_box.focus_position + 1,
+            self.task_color_map,
+        )
+        self.main_frame.tasks_list.incompleted_tasks.list_walker.pop(
+            self.main_frame.tasks_list.incompleted_tasks.list_box.focus_position
+        )
+        self.main_frame.save_state.data["tasks"][self.task] = color
+        self.main_frame.save_state.save()
+
+    def get_color(self):
+        return self.color
+
     def keypress(self, size, key):
         if key == "enter":
             self.change_status()
+
+        elif key in ("h", "H"):
+            properties = Task_properties(self, self.main_frame)
+            self.main_frame.set_body(properties)
+
         return super().keypress(size, key)
