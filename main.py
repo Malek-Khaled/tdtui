@@ -3,6 +3,7 @@ from widgets.input_widgets.add_task_field import Add_task_field
 from widgets.tasks_widgets.tasks_list import Tasks_list
 from widgets.pop_ups.existing_task_error import Existing_task_error
 from saving_system.save_state import Save_state
+from widgets.keybinds_helper import Keybind_helper
 
 
 class Main_frame(urwid.Frame):
@@ -19,6 +20,7 @@ class Main_frame(urwid.Frame):
             [("weight", 2, self.tasks_list), ("fixed", 6, self.task_def)]
         )
         self.existing_task_error = Existing_task_error(self)
+        self.keybinds_helper = Keybind_helper()
         super().__init__(self.main_layout, *args)
         self.main_layout.set_focus(self.task_def)
 
@@ -29,6 +31,7 @@ class Main_frame(urwid.Frame):
         elif key == "tab":
             if self.main_layout.get_focus() == self.task_def:
                 if len(self.tasks_list.incompleted_tasks.list_walker) != 0:
+                    self.set_footer(self.keybinds_helper)
                     self.main_layout.set_focus(self.tasks_list)
                     self.tasks_list.widget_list = self.tasks_list.with_scrollbar
                     self.tasks_list.set_focus(self.tasks_list.incompleted_tasks)
@@ -37,6 +40,7 @@ class Main_frame(urwid.Frame):
                     self.tasks_list.widget_list = self.tasks_list.with_scrollbar
                     self.tasks_list.set_focus(self.tasks_list.completed_tasks)
             else:
+                self.set_footer(None)
                 self.main_layout.set_focus(self.task_def)
                 self.tasks_list.widget_list = self.tasks_list.without_scrollbar
         else:
