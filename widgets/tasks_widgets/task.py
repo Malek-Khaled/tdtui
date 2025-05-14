@@ -62,6 +62,15 @@ class Task(urwid.SelectableIcon):
         self.main_frame.save_state.data["tasks"][self.task] = color
         self.main_frame.save_state.save()
 
+    def reword(self, task):
+        del self.main_frame.save_state.data["tasks"][self.task]
+        self.main_frame.tasks_list.existing_tasks.remove(self.task)
+        self.task = task
+        self.set_text(f"{self.get_status()} {self.task}")
+        self.main_frame.tasks_list.existing_tasks.append(self.task)
+        self.main_frame.save_state.data["tasks"][self.task] = self.color
+        self.main_frame.save_state.save()
+
     def get_color(self):
         return self.color
 
@@ -71,6 +80,10 @@ class Task(urwid.SelectableIcon):
 
         elif key in ("h", "H"):
             properties = Task_properties(self, self.main_frame)
+            self.main_frame.set_body(properties)
+
+        elif key in ("r", "R"):
+            properties = Task_properties(self, self.main_frame, mode="reword")
             self.main_frame.set_body(properties)
 
         return super().keypress(size, key)

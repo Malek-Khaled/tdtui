@@ -6,9 +6,7 @@ class Task_name(urwid.LineBox):
         self.main_frame = main_frame
         self.main_widget = main_widget
         self.input = urwid.Edit(multiline=False)
-        super().__init__(
-            *args, original_widget=self.input, title="Add a task", title_align="left"
-        )
+        super().__init__(*args, original_widget=self.input, title_align="left")
 
     def keypress(self, size, key):
         if key == "enter":
