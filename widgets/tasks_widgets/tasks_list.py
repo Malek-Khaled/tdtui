@@ -47,8 +47,10 @@ class Tasks_list(urwid.Pile):
                     self.get_focus() == self.incompleted_tasks
                     and len(self.completed_tasks.list_walker) != 0
                 ):
+                    self.main_frame.set_footer(None)
                     self.set_focus(self.completed_tasks)
                 elif len(self.incompleted_tasks.list_walker) != 0:
+                    self.main_frame.set_footer(self.main_frame.keybinds_helper)
                     self.set_focus(self.incompleted_tasks)
             elif key == "esc":
                 raise urwid.ExitMainLoop()
@@ -81,13 +83,17 @@ class Tasks_list(urwid.Pile):
             len(self.get_listwalker()) == 0
             and len(self.get_listwalker(unfocused=True)) != 0
         ):
+            if self.get_unfocused() == self.completed_tasks:
+                self.main_frame.set_footer(None)
+            else:
+                self.main_frame.set_footer(self.main_frame.keybinds_helper)
             self.set_focus(self.get_unfocused())
 
         elif (
             len(self.get_listwalker()) == 0
             and len(self.get_listwalker(unfocused=True)) == 0
         ):
-            self.main_frame.main_layout.set_focus(self.main_frame.task_def)
+            self.main_frame.main_layout.base_widget.set_focus(self.main_frame.task_def)
 
     def get_unfocused(self):
         if self.get_focus() == self.incompleted_tasks:

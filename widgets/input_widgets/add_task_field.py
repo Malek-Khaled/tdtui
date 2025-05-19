@@ -9,8 +9,7 @@ class Add_task_field(urwid.Frame):
         self.list_walker = list_walker
         self.input = urwid.Edit(multiline=False)
         self.task_name = Task_name(self, self.main_frame)
-        self.set_color = urwid.ScrollBar(
-            Select_color(self, self.main_frame, self.list_walker, self.task_name),
-            thumb_char=urwid.ScrollBar.Symbols.DRAWING_HEAVY,
+        self.set_color = Select_color(
+            self, self.main_frame, self.list_walker, self.task_name
         )
         super().__init__(*args, body=self.task_name)

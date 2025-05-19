@@ -39,4 +39,4 @@ class Select_color(Color):
         self.main_widget.set_body(self.task_name)
         self.task_name.input.set_edit_text("")
         self.main_frame.set_body(self.main_frame.main_layout)
-        self.main_frame.main_layout.set_focus(self.main_frame.task_def)
+        self.main_frame.main_layout.base_widget.set_focus(self.main_frame.task_def)

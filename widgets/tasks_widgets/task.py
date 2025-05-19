@@ -79,11 +79,13 @@ class Task(urwid.SelectableIcon):
             self.change_status()
 
         elif key in ("h", "H"):
-            properties = Task_properties(self, self.main_frame)
-            self.main_frame.set_body(properties)
+            if not self.is_completed:
+                properties = Task_properties(self, self.main_frame)
+                self.main_frame.set_body(properties)
 
         elif key in ("r", "R"):
-            properties = Task_properties(self, self.main_frame, mode="reword")
-            self.main_frame.set_body(properties)
+            if not self.is_completed:
+                properties = Task_properties(self, self.main_frame, mode="reword")
+                self.main_frame.set_body(properties)
 
         return super().keypress(size, key)

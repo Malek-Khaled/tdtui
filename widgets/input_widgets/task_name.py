@@ -29,4 +29,6 @@ class Task_name(urwid.LineBox):
     def set_color_mode(self):
         self.main_widget.set_body(self.main_widget.set_color)
         self.main_frame.set_body(self.main_frame.color_select_layout)
-        self.main_frame.color_select_layout.set_focus(self.main_frame.task_def)
+        self.main_frame.color_select_layout.base_widget.set_focus(
+            self.main_frame.task_def
+        )

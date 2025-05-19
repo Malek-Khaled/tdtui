@@ -8,15 +8,13 @@ class Task_properties(urwid.Overlay):
         self.focused_task = task
         self.mode = mode
         if self.mode == "color":
-            self.color = urwid.ScrollBar(
-                Color(), thumb_char=urwid.ScrollBar.Symbols.DRAWING_HEAVY
-            )
-            self.color_selector = self.color.original_widget
-            self.color_selector.set_title("Change Color")
-            self.propertie = self.color_selector
+            self.propertie = Color()
+            self.propertie.set_title("Change Color")
+            self.size = {"height": 10, "width": 30}
         elif self.mode == "reword":
             self.propertie = Task_input()
             self.propertie.set_title("Reword")
+            self.size = {"height": 3, "width": 50}
         self.main_frame = main_frame
 
         super().__init__(
@@ -24,8 +22,8 @@ class Task_properties(urwid.Overlay):
             bottom_w=self.main_frame.main_layout,
             top_w=self.propertie,
             align="center",
-            width=("relative", 50),
-            height=("relative", 40),
+            width=self.size["width"],
+            height=self.size["height"],
             valign="middle",
         )
 
@@ -36,8 +34,8 @@ class Task_properties(urwid.Overlay):
         elif key == "enter":
             if self.mode == "color":
                 self.focused_task.change_color(
-                    self.color_selector.color_dict[
-                        self.color_selector.colors_list_box.focus_position
+                    self.propertie.color_dict[
+                        self.propertie.colors_list_box.focus_position
                     ]
                 )
             elif self.mode == "reword":
