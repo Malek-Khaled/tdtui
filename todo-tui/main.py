@@ -8,6 +8,26 @@ from widgets.keybinds_helper import Keybind_helper
 
 class Main_frame(urwid.Frame):
     def __init__(self, *args):
+        self.palette = [
+            ("task_yellow", "yellow", ""),
+            ("task_yellow_focus", "black", "yellow"),
+            ("task_blue", "light blue", ""),
+            ("task_blue_focus", "black", "light blue"),
+            ("task_cyan", "light cyan", ""),
+            ("task_cyan_focus", "black", "light cyan"),
+            ("task_dark_cyan", "dark cyan", ""),
+            ("task_dark_cyan_focus", "black", "dark cyan"),
+            ("task_green", "light green", ""),
+            ("task_green_focus", "black", "light green"),
+            ("task_brown", "brown", ""),
+            ("task_brown_focus", "black", "brown"),
+            ("task_red", "light red", ""),
+            ("task_red_focus", "black", "light red"),
+            ("task_magenta", "light magenta", ""),
+            ("task_magenta_focus", "black", "light magenta"),
+            ("task_completed", "dark gray", ""),
+            ("task_completed_focus", "black", "dark gray"),
+        ]
         self.save_state = Save_state()
         self.tasks_list = Tasks_list(self)
         self.task_def = Add_task_field(
@@ -47,32 +67,9 @@ class Main_frame(urwid.Frame):
         else:
             return super().keypress(size, key)
 
+    def padding(self, left=5, right=5):
+        return urwid.Padding(self, left=left, right=right)
 
-def padding(widget, left=5, right=5):
-    return urwid.Padding(widget, left=left, right=right)
-
-
-palette = [
-    ("task_yellow", "yellow", ""),
-    ("task_yellow_focus", "black", "yellow"),
-    ("task_blue", "light blue", ""),
-    ("task_blue_focus", "black", "light blue"),
-    ("task_cyan", "light cyan", ""),
-    ("task_cyan_focus", "black", "light cyan"),
-    ("task_dark_cyan", "dark cyan", ""),
-    ("task_dark_cyan_focus", "black", "dark cyan"),
-    ("task_green", "light green", ""),
-    ("task_green_focus", "black", "light green"),
-    ("task_brown", "brown", ""),
-    ("task_brown_focus", "black", "brown"),
-    ("task_red", "light red", ""),
-    ("task_red_focus", "black", "light red"),
-    ("task_magenta", "light magenta", ""),
-    ("task_magenta_focus", "black", "light magenta"),
-    ("task_completed", "dark gray", ""),
-    ("task_completed_focus", "black", "dark gray"),
-]
-main_frame = Main_frame()
-loop = urwid.MainLoop(padding(main_frame), palette=palette)
-
-loop.run()
+    def run(self):
+        loop = urwid.MainLoop(self.padding(), palette=self.palette)
+        loop.run()

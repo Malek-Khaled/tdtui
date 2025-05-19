@@ -1,0 +1,18 @@
+[build-system]
+requires = [
+  "setuptools>=42",
+  "wheel"
+]
+bulid-backend = "setuptools.bulid_meta"
+
+[project]
+name = "todo-tui"
+version = "0.1.0"
+description = "A simple TODO app with terminal UI"
+authors = [{name = "Malek Khaled"}]
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = ["urwid"]
+
+[project.urls]
+"Homepage" = "https://github.com/Malek-Khaled/todo-tui"
