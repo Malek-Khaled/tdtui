@@ -19,6 +19,9 @@ class Task_name(urwid.LineBox):
                 )
                 self.set_color_mode()
             else:
+                self.main_frame.existing_task_error.text.set_text(
+                    self.main_frame.existing_task_error.default_text
+                )
                 self.main_frame.set_body(self.main_frame.existing_task_error)
         elif key == "esc":
             raise urwid.ExitMainLoop()

@@ -4,7 +4,8 @@ import urwid
 class Existing_task_error(urwid.Overlay):
     def __init__(self, main_frame, *args):
         self.main_frame = main_frame
-        self.text = urwid.Text("This task has already been added", align="center")
+        self.default_text = "This task has already been added"
+        self.text = urwid.Text(self.default_text, align="center")
         self.text_filler = urwid.Filler(self.text, valign="middle")
         self.return_text = urwid.Padding(
             urwid.Text("Return: Q", align="right"), right=1

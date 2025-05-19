@@ -38,9 +38,21 @@ class Task_properties(urwid.Overlay):
                         self.propertie.colors_list_box.focus_position
                     ]
                 )
+                self.main_frame.set_body(self.main_frame.main_layout)
             elif self.mode == "reword":
-                self.focused_task.reword(self.propertie.input.get_edit_text())
-
-            self.main_frame.set_body(self.main_frame.main_layout)
+                if (
+                    self.propertie.input.get_edit_text()
+                    not in self.main_frame.tasks_list.existing_tasks
+                ):
+                    self.focused_task.reword(self.propertie.input.get_edit_text())
+                    self.main_frame.set_body(self.main_frame.main_layout)
+                else:
+                    self.main_frame.existing_task_error.text.set_text(
+                        "You can't reword to existing task"
+                    )
+                    self.main_frame.set_body(self.main_frame.existing_task_error)
+                    # self.main_frame.existing_task_error.text.set_text(
+                    #     self.main_frame.existing_task_error.default_text
+                    # )
 
         return super().keypress(size, key)
