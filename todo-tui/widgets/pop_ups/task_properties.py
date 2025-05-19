@@ -51,8 +51,5 @@ class Task_properties(urwid.Overlay):
                         "You can't reword to existing task"
                     )
                     self.main_frame.set_body(self.main_frame.existing_task_error)
-                    # self.main_frame.existing_task_error.text.set_text(
-                    #     self.main_frame.existing_task_error.default_text
-                    # )
 
         return super().keypress(size, key)
