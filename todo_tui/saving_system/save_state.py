@@ -1,11 +1,16 @@
 import os
+from appdirs import user_data_dir
 import json
-from widgets.tasks_widgets.task import Task
+from ..widgets.tasks_widgets.task import Task
 
 
 class Save_state:
     def __init__(self):
-        self.save_file = os.path.dirname(__file__) + "/tasks.json"
+        self.app_name = "todo-tui"
+        self.data_dir = user_data_dir(self.app_name)
+        os.makedirs(self.data_dir, exist_ok=True)
+        self.save_file = os.path.join(self.data_dir, "tasks.json")
+        self.check_exist()
         self.data = self.load()
 
     def save(self):
@@ -29,3 +34,10 @@ class Save_state:
             for task_attr in main_frame.save_state.load()["tasks"].items():
                 task = Task(task_attr[0], task_attr[1], main_frame)
                 tasks_list.append(task.task_color_map)
+
+    def check_exist(self):
+        try:
+            with open(self.save_file, "x") as json_file:
+                pass
+        except:
+            pass

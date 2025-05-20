@@ -15,4 +15,7 @@ requires-python = ">=3.7"
 dependencies = ["urwid"]
 
 [project.urls]
-"Homepage" = "https://github.com/Malek-Khaled/todo-tui"
+"Github" = "https://github.com/Malek-Khaled/todo-tui"
+
+[project.scripts]
+todo-tui = "todo_tui:run_app"

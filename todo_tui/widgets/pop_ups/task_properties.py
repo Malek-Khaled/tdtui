@@ -1,6 +1,6 @@
 import urwid
-from widgets.color import Color
-from widgets.task_input import Task_input
+from ..color import Color
+from ..task_input import Task_input
 
 
 class Task_properties(urwid.Overlay):

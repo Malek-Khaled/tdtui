@@ -1,5 +1,5 @@
 import urwid
-from widgets.pop_ups.task_properties import Task_properties
+from ..pop_ups.task_properties import Task_properties
 
 
 class Task(urwid.SelectableIcon):

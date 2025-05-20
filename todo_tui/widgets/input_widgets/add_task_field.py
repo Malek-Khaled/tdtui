@@ -1,6 +1,6 @@
 import urwid
-from widgets.input_widgets.select_color import Select_color
-from widgets.input_widgets.task_name import Task_name
+from .select_color import Select_color
+from .task_name import Task_name
 
 
 class Add_task_field(urwid.Frame):

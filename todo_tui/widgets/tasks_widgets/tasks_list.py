@@ -1,6 +1,6 @@
 import urwid
-from widgets.tasks_widgets.incompleted_tasks_list import Incompleted_tasks_list
-from widgets.tasks_widgets.completed_tasks_list import Completed_tasks_list
+from ..tasks_widgets.incompleted_tasks_list import Incompleted_tasks_list
+from ..tasks_widgets.completed_tasks_list import Completed_tasks_list
 
 
 class Tasks_list(urwid.Pile):

@@ -1,6 +1,6 @@
 import urwid
-from widgets.tasks_widgets.task import Task
-from widgets.color import Color
+from ..tasks_widgets.task import Task
+from ..color import Color
 
 
 class Select_color(Color):
