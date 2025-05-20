@@ -1,17 +1,6 @@
 env
-widgets/tasks_widgets/__pycache__
-widgets/input_widgets/__pycache__
-widgets/pop_ups/__pycache__
-saving_system/__pycache__
-widgets/__pycache__
-todo-tui/saving_system/__pycache__
-todo-tui/widgets/__pycache__
-todo-tui/widgets/input_widgets/__pycache__
-todo-tui/widgets/pop_ups/__pycache__
-todo-tui/widgets/tasks_widgets/__pycache__
 todo_tui/__pycache__
 todo_tui/widgets/__pycache__
 todo_tui/widgets/input_widgets/__pycache__
-todo_tui/saving_system/__pycache__
 todo_tui/widgets/pop_ups/__pycache__
 todo_tui/widgets/tasks_widgets/__pycache__
