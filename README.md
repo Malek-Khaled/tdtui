@@ -1,4 +1,4 @@
-# Todo-tui
+# tdtui
 
 ### Simple TODO app with terminal UI
 
