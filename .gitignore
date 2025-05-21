@@ -1,6 +1,6 @@
 env
-todo_tui/__pycache__
-todo_tui/widgets/__pycache__
-todo_tui/widgets/input_widgets/__pycache__
-todo_tui/widgets/pop_ups/__pycache__
-todo_tui/widgets/tasks_widgets/__pycache__
+tdtui/__pycache__
+tdtui/widgets/__pycache__
+tdtui/widgets/input_widgets/__pycache__
+tdtui/widgets/pop_ups/__pycache__
+tdtui/widgets/tasks_widgets/__pycache__

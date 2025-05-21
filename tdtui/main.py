@@ -2,7 +2,7 @@ import urwid
 from .widgets.input_widgets.add_task_field import Add_task_field
 from .widgets.tasks_widgets.tasks_list import Tasks_list
 from .widgets.pop_ups.existing_task_error import Existing_task_error
-from .saving_system.save_state import Save_state
+from .save_state import Save_state
 from .widgets.keybinds_helper import Keybind_helper
 
 

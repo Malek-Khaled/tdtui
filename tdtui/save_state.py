@@ -1,12 +1,12 @@
 import os
 from appdirs import user_data_dir
 import json
-from ..widgets.tasks_widgets.task import Task
+from .widgets.tasks_widgets.task import Task
 
 
 class Save_state:
     def __init__(self):
-        self.app_name = "todo-tui"
+        self.app_name = "tdtui"
         self.data_dir = user_data_dir(self.app_name)
         os.makedirs(self.data_dir, exist_ok=True)
         self.save_file = os.path.join(self.data_dir, "tasks.json")

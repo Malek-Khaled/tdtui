@@ -6,16 +6,16 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "todo-tui"
-version = "0.1.0"
+name = "tdtui"
+version = "1.0"
 description = "A simple TODO app with terminal UI"
 authors = [{name = "Malek Khaled"}]
 readme = "README.md"
 requires-python = ">=3.7"
-dependencies = ["urwid"]
+dependencies = ["urwid","appdirs"]
 
 [project.urls]
 "Github" = "https://github.com/Malek-Khaled/todo-tui"
 
 [project.scripts]
-todo-tui = "todo_tui:run_app"
+tdtui = "tdtui:run_app"
